@@ -119,18 +119,14 @@ class ProductManager {
 
     // debe tener un metodo "deleteProduct" que debe recibir un id y debe eliminar el producto que tenga ese id en el archivo
     async deleteProduct(id) {
-        try {
-            const deleteAProduct = this.products.filter(item => item.id !== id)
 
-            if(deleteAProduct) {
-                console.log("Se eliminó el producto");
-                this.products = deleteAProduct;
-                await this.saveFile();
-            } else {
-                console.log("Error al eliminar producto");
-            }
+        try {
+            const productsArray = await this.readFile();
+            const newProductsArray = productsArray.filter(item => item.id !== id);
+            await this.saveFile(newProductsArray);
+
         } catch (error) {
-            
+            console.log("Error al eliminar producto");
         }
     }
 }
@@ -169,7 +165,7 @@ manager.getProducts();
 const producto2 = {
     title: "producto prueba",
     description: "Este es un producto prueba",
-    price: 200,
+    price: 250,
     thumbnail: "Sin imagen",
     code: "abc124",
     stock: 25
@@ -180,13 +176,24 @@ manager.addProduct(producto2);
 const producto3 = {
     title: "producto prueba",
     description: "Este es un producto prueba",
-    price: 200,
+    price: 325,
     thumbnail: "Sin imagen",
     code: "abc125",
     stock: 25
 }
 
 manager.addProduct(producto3);
+
+const producto4 = {
+    title: "producto prueba",
+    description: "Este es un producto prueba",
+    price: 300,
+    thumbnail: "Sin imagen",
+    code: "abc126",
+    stock: 25
+}
+
+manager.addProduct(producto4);
 
 manager.getProducts();
 
